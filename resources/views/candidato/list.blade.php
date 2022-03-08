@@ -30,17 +30,20 @@
             <td>{{$candidato->id}}</td>
             <td>{{$candidato->nombrecompleto}}</td>
             <td>{{$candidato->sexo}}</td>
-            <td><img src="image/{{$candidato->foto}}" width="128px"></td>
-            <td><a href="pdf/{{$candidato->perfil}}">perfil</td>
-            <td><a href="{{ route('candidato.edit', $candidato->id)}}"
-            class="btn btn-primary">Edit</a></td>
+            <td><img src="image/{{$candidato->foto}}" width="128px" height="128px" ></td>
+            <td><a href="pdf/{{$candidato->perfil}}">{{$candidato->nombrecompleto}}</td>
+            <td><a href="{{ route('candidato.edit', $candidato->id)}}" 
+            class="btn btn-primary" >
+            Edit</a></td>
+            
             <td>
             <form action="{{ route('candidato.destroy', $candidato->id)}}"
             method="post">
             @csrf
             @method('DELETE')
             <button class="btn btn-danger" type="submit"
-            onclick="return confirm('Esta seguro de borrar {{$candidato->nombrecompleto}}')" >Del</button>
+            onclick="return confirm('Esta seguro de borrar {{$candidato->nombrecompleto}}')" >
+            Del</button>
             </form>
             </td>
         </tr>
