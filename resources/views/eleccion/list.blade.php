@@ -32,11 +32,11 @@
         <tr>
             <td>{{$eleccion->id}}</td>
             <td>{{$eleccion->periodo}}</td>
-            <td>{{$eleccion->fecha}}</td>
-            <td>{{$eleccion->fechaapertura}}</td>
-            <td>{{$eleccion->horaapertura}}</td>
-            <td>{{$eleccion->fechacierre}}</td>
-            <td>{{$eleccion->horacierre}}</td>
+            <td>{{$eleccion->fecha->format('Y-m-d')}}</td>
+            <td>{{$eleccion->fechaapertura->format('Y-m-d')}}</td>
+            <td>{{$eleccion->horaapertura->format('H:i')}}</td>
+            <td>{{$eleccion->fechacierre->format('Y-m-d')}}</td>
+            <td>{{$eleccion->horacierre->format('H:i')}}</td>
             <td>{{$eleccion->observaciones}}</td>
 
             <td><a href="{{ route('eleccion.edit', $eleccion->id)}}"
@@ -55,6 +55,7 @@
         </tr>
         @endforeach
     </tbody>
+   
 </table>
 <div>
 @endsection

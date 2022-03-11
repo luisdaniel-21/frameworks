@@ -36,31 +36,31 @@
             <div class="form-group">
                 @csrf
                 <label for="descripcion">Fecha:</label>
-                <input type="date" value="{{$eleccion->fecha}}" class="form-control" name="fecha" />
+                <input type="date" value="{{$eleccion->fecha->format('Y-m-d')}}" class="form-control" name="fecha" />
             </div>
 
             <div class="form-group">
                 @csrf
                 <label for="descripcion">Fecha arpertura:</label>
-                <input type="date" value="{{$eleccion->fechaapertura}}" class="form-control" name="fechaapertura" />
+                <input type="date" value="{{$eleccion->fechaapertura->format('Y-m-d')}}" class="form-control" name="fechaapertura" />
             </div>
 
             <div class="form-group">
                 @csrf
                 <label for="descripcion">Hora arpertura:</label>
-                <input type="time" value="{{$eleccion->horaapertura}}" class="form-control" name="horaapertura" />
+                <input type="time" value="{{$eleccion->horaapertura->format('H:i')}}" class="form-control" name="horaapertura" />
             </div>
 
             <div class="form-group">
                 @csrf
                 <label for="descripcion">Fecha cierre:</label>
-                <input type="date" value="{{$eleccion->fechacierre}}" class="form-control" name="fechacierre" />
+                <input type="date" value="{{$eleccion->fechacierre->format('Y-m-d')}}" class="form-control" name="fechacierre" />
             </div>
 
             <div class="form-group">
                 @csrf
                 <label for="descripcion">Hora cierre:</label>
-                <input type="time" value="{{$eleccion->horacierre}}" class="form-control" name="horacierre" />
+                <input type="time" value="{{$eleccion->horacierre->format('H:i')}}" class="form-control" name="horacierre" />
             </div>
 
             <div class="form-group">
