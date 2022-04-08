@@ -122,27 +122,6 @@ class CasillaController extends GenericController
  public function destroy($id)
  {
     
-    $casilla = Casilla::find($id);
-    Casilla::WhereId($id)->delete();
-    return $this->send($casilla, $id);
-
-
-   /* $casilla = Casilla::find($id);
-    DB::beginTransaction();
-    try {
-        if ($casilla){
-            Votocandidato::where('voto_id','=',$id)->delete();
-        }
-        Casilla::whereId($id)->delete();
-        DB::commit();
-    } catch(\Exception  $ex){
-        DB::rollBack();
-    }
-
-    return $this->send($casilla,$id);*/
-
-
-
 
  }
 }

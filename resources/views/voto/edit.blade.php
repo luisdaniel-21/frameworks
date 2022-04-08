@@ -29,7 +29,7 @@
             <div class="form-group">
                 @csrf
                 <label for="ubicacion">Casilla:</label>
-                <input type="text" value="{{$voto->casilla->ubicacion}}" class="form-control" name="ubicacion" />
+                <input type="text" value="{{$voto->casilla->ubicacion}}" readonly="true"  class="form-control" name="ubicacion" />
             </div>
             <label >Candidatos y Votos:</label>
             <table>
