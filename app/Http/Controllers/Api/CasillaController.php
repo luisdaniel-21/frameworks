@@ -3,11 +3,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\GenericController as GenericController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Candidato;
+use App\Models\Casilla;
 use App\Models\Votocandidato;
 use Exception;
 use Illuminate\Support\Facades\DB;
-class CandidatoController extends GenericController
+class CasillaController extends GenericController
 {
  /**
  * Display a listing of the resource.
@@ -16,8 +16,8 @@ class CandidatoController extends GenericController
  */
  public function index()
  {
- $candidatos = Candidato::all();
- $resp = $this->sendResponse($candidatos, "Listado de candidatos");
+ $casillas = Casilla::all();
+ $resp = $this->sendResponse($casillas, "Listado de casillas");
  return ($resp);
  }
  /**
@@ -38,37 +38,25 @@ class CandidatoController extends GenericController
  public function store(Request $request)
  {
  $validacion = Validator::make($request->all(), [
- 'nombrecompleto' => 'unique:candidato|required|max:200',
- 'sexo' =>'required'
+ 'ubicacion' => 'unique:casilla|required|max:200'
+
  ]);
 
 
  if ($validacion->fails())
  return $this->sendError("Error de validacion", $validacion->errors());
 
- $fotocandidato=""; $perfilcandidato="";
 
- if ($request->hasFile('foto')){
- $foto = $request->file('foto');
- $fotocandidato= $foto->getClientOriginalName();
- }
- if ($request->hasFile('perfil')){
- $perfil = $request->file('perfil');
- $perfilcandidato = $perfil->getClientOriginalName();
- }
 
  $campos = array(
- 'nombrecompleto' => $request->nombrecompleto,
- 'sexo' => $request->sexo,
- 'foto' => $fotocandidato,
- 'perfil' => $perfilcandidato,
+ //'id' => $request->id,
+ 'ubicacion' => $request->ubicacion,
  );
 
- if ($request->hasFile('foto')) $foto->move(public_path('image'), $fotocandidato);
- if ($request->hasFile('perfil')) $perfil->move(public_path('pdf'), $perfilcandidato);
 
- $candidato = Candidato::create($campos);
- $resp = $this->sendResponse($candidato,
+
+ $casilla = Casilla::create($campos);
+ $resp = $this->sendResponse($casilla,
  "Guardado...");
  return($resp);
 
@@ -94,9 +82,8 @@ class CandidatoController extends GenericController
  public function edit($id)
  {
     $id = intval($id);
-    $candidato = Candidato::find($id);
-    return $this->send($candidato,$id);
-
+    $casilla = Casilla::find($id);
+    return $this->send($casilla,$id);
  }
 
  private function send($data,$id){
@@ -111,7 +98,10 @@ class CandidatoController extends GenericController
 
 }
 
- 
+
+
+
+
  /**
  * Update the specified resource in storage.
  *
@@ -121,8 +111,7 @@ class CandidatoController extends GenericController
  */
  public function update(Request $request, $id)
  {
- 
-
+ //
  }
  /**
  * Remove the specified resource from storage.
@@ -130,24 +119,30 @@ class CandidatoController extends GenericController
  * @param int $id
  * @return \Illuminate\Http\Response
  */
-
- 
  public function destroy($id)
  {
-    $candidato = Candidato::find($id);
+    
+    $casilla = Casilla::find($id);
+    Casilla::WhereId($id)->delete();
+    return $this->send($casilla, $id);
+
+
+   /* $casilla = Casilla::find($id);
     DB::beginTransaction();
     try {
-        if ($candidato){
-            Votocandidato::where('candidato_id','=',$id)->delete();
+        if ($casilla){
+            Votocandidato::where('voto_id','=',$id)->delete();
         }
-        Candidato::whereId($id)->delete();
+        Casilla::whereId($id)->delete();
         DB::commit();
     } catch(\Exception  $ex){
         DB::rollBack();
     }
 
-    return $this->send($candidato,$id);
+    return $this->send($casilla,$id);*/
 
-}
 
+
+
+ }
 }

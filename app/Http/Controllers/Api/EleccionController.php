@@ -3,11 +3,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\GenericController as GenericController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Candidato;
-use App\Models\Votocandidato;
+use App\Models\Eleccion;
+
+use App\Models\Voto;
 use Exception;
 use Illuminate\Support\Facades\DB;
-class CandidatoController extends GenericController
+
+class EleccionController extends GenericController
 {
  /**
  * Display a listing of the resource.
@@ -16,8 +18,8 @@ class CandidatoController extends GenericController
  */
  public function index()
  {
- $candidatos = Candidato::all();
- $resp = $this->sendResponse($candidatos, "Listado de candidatos");
+ $elecciones = Eleccion::all();
+ $resp = $this->sendResponse($elecciones, "Listado de elecciones");
  return ($resp);
  }
  /**
@@ -38,37 +40,35 @@ class CandidatoController extends GenericController
  public function store(Request $request)
  {
  $validacion = Validator::make($request->all(), [
- 'nombrecompleto' => 'unique:candidato|required|max:200',
- 'sexo' =>'required'
+ 'periodo' => 'unique:eleccion|required|max:200',
+ 'fecha' =>'required',
+ 'fechaapertura' =>'required',
+ 'horaapertura' =>'required',
+ 'fechacierre' =>'required',
+ 'horacierre' =>'required',
+ 'observaciones' =>'required',
+ 
  ]);
 
 
  if ($validacion->fails())
  return $this->sendError("Error de validacion", $validacion->errors());
 
- $fotocandidato=""; $perfilcandidato="";
-
- if ($request->hasFile('foto')){
- $foto = $request->file('foto');
- $fotocandidato= $foto->getClientOriginalName();
- }
- if ($request->hasFile('perfil')){
- $perfil = $request->file('perfil');
- $perfilcandidato = $perfil->getClientOriginalName();
- }
 
  $campos = array(
- 'nombrecompleto' => $request->nombrecompleto,
- 'sexo' => $request->sexo,
- 'foto' => $fotocandidato,
- 'perfil' => $perfilcandidato,
+ 'periodo' => $request->periodo,
+ 'fecha' => $request->fecha,
+ 'fechaapertura' => $request->fechaapertura,
+ 'horaapertura' => $request->horaapertura,
+ 'fechacierre' => $request->fechacierre,
+ 'horacierre' => $request->horacierre,
+ 'observaciones' => $request->observaciones,
  );
 
- if ($request->hasFile('foto')) $foto->move(public_path('image'), $fotocandidato);
- if ($request->hasFile('perfil')) $perfil->move(public_path('pdf'), $perfilcandidato);
 
- $candidato = Candidato::create($campos);
- $resp = $this->sendResponse($candidato,
+
+ $eleccion = Eleccion::create($campos);
+ $resp = $this->sendResponse($eleccion,
  "Guardado...");
  return($resp);
 
@@ -93,9 +93,10 @@ class CandidatoController extends GenericController
  */
  public function edit($id)
  {
+ 
     $id = intval($id);
-    $candidato = Candidato::find($id);
-    return $this->send($candidato,$id);
+    $eleccion = Eleccion::find($id);
+    return $this->send($eleccion,$id);
 
  }
 
@@ -111,7 +112,7 @@ class CandidatoController extends GenericController
 
 }
 
- 
+
  /**
  * Update the specified resource in storage.
  *
@@ -121,8 +122,7 @@ class CandidatoController extends GenericController
  */
  public function update(Request $request, $id)
  {
- 
-
+ //
  }
  /**
  * Remove the specified resource from storage.
@@ -130,24 +130,24 @@ class CandidatoController extends GenericController
  * @param int $id
  * @return \Illuminate\Http\Response
  */
-
- 
  public function destroy($id)
  {
-    $candidato = Candidato::find($id);
+ 
+    $eleccion = Eleccion::find($id);
     DB::beginTransaction();
     try {
-        if ($candidato){
-            Votocandidato::where('candidato_id','=',$id)->delete();
+        if ($eleccion){
+            Voto::where('eleccion_id','=',$id)->delete();
         }
-        Candidato::whereId($id)->delete();
+        Eleccion::whereId($id)->delete();
         DB::commit();
     } catch(\Exception  $ex){
         DB::rollBack();
     }
 
-    return $this->send($candidato,$id);
+    return $this->send($eleccion,$id);
 
-}
 
+
+ }
 }

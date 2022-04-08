@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CandidatoController;
+use App\Http\Controllers\Api\CasillaController;
+use App\Http\Controllers\Api\EleccionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource("candidato", CandidatoController::class);
+Route::resource("casilla", CasillaController::class);
+Route::resource("eleccion", EleccionController::class);
