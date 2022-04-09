@@ -122,6 +122,35 @@ class CandidatoController extends GenericController
  public function update(Request $request, $id)
  {
  
+    $this->validateData($request);
+
+        $fotoCandidato = "";
+        $perfilCandidato = "";
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $fotoCandidato = $foto->getClientOriginalName();
+        }
+        if ($request->hasFile('perfil')) {
+            $perfil = $request->file('perfil');
+            $perfilCandidato = $perfil->getClientOriginalName();
+        }
+
+        $currentValue = Candidato::find($id);
+        if (empty($fotoCandidato)) $fotoCandidato = $currentValue->foto;
+        if (empty($perfilCandidato)) $perfilCandidato = $currentValue->perfil;
+
+        $campos=[
+                'nombrecompleto' => $request->nombrecompleto,
+                'sexo'           => $request->sexo,
+                'foto'           => $fotoCandidato,
+                'perfil'         => $perfilCandidato,
+        ];
+        if ($request->hasFile('foto')) $foto->move(public_path('image'), $fotoCandidato);
+        if ($request->hasFile('perfil')) $perfil->move(public_path('pdf'), $perfilCandidato);
+
+        Candidato::whereId($id)->update($campos);
+        return $this->send($candidato,$id);
+
 
  }
  /**

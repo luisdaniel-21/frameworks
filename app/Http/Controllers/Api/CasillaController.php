@@ -92,7 +92,7 @@ class CasillaController extends GenericController
         "Operacion exitosa...");
     }else{
         $resp =
-        $this->sendError("No se encontro el candidato: $id");
+        $this->sendError("No se encontro la casilla: $id");
     }
     return ($resp);
 
@@ -111,7 +111,20 @@ class CasillaController extends GenericController
  */
  public function update(Request $request, $id)
  {
- //
+    
+    $request->validate([
+        'ubicacion' => 'required|max:100',
+
+    ]);
+
+
+    $data['ubicacion']= $request->ubicacion;
+
+    Casilla::whereId($id)->update($data);
+    return redirect('casilla')
+    ->with('success', 'Actualizado correctamente...');
+
+
  }
  /**
  * Remove the specified resource from storage.
@@ -122,6 +135,7 @@ class CasillaController extends GenericController
  public function destroy($id)
  {
     
+
 
  }
 }
