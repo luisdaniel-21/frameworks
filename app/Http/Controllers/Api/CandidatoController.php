@@ -122,34 +122,31 @@ class CandidatoController extends GenericController
  public function update(Request $request, $id)
  {
  
-    $this->validateData($request);
+    $fotocandidato=""; $perfilcandidato="";
 
-        $fotoCandidato = "";
-        $perfilCandidato = "";
-        if ($request->hasFile('foto')) {
-            $foto = $request->file('foto');
-            $fotoCandidato = $foto->getClientOriginalName();
-        }
-        if ($request->hasFile('perfil')) {
-            $perfil = $request->file('perfil');
-            $perfilCandidato = $perfil->getClientOriginalName();
-        }
-
-        $currentValue = Candidato::find($id);
-        if (empty($fotoCandidato)) $fotoCandidato = $currentValue->foto;
-        if (empty($perfilCandidato)) $perfilCandidato = $currentValue->perfil;
-
-        $campos=[
-                'nombrecompleto' => $request->nombrecompleto,
-                'sexo'           => $request->sexo,
-                'foto'           => $fotoCandidato,
-                'perfil'         => $perfilCandidato,
-        ];
-        if ($request->hasFile('foto')) $foto->move(public_path('image'), $fotoCandidato);
-        if ($request->hasFile('perfil')) $perfil->move(public_path('pdf'), $perfilCandidato);
-
-        Candidato::whereId($id)->update($campos);
-        return $this->send($candidato,$id);
+    if ($request->hasFile('foto')){
+    $foto = $request->file('foto');
+    $fotocandidato= $foto->getClientOriginalName();
+    }
+    if ($request->hasFile('perfil')){
+    $perfil = $request->file('perfil');
+    $perfilcandidato = $perfil->getClientOriginalName();
+    }
+   
+    $campos = array(
+    'nombrecompleto' => $request->nombrecompleto,
+    'sexo' => $request->sexo,
+    'foto' => $fotocandidato,
+    'perfil' => $perfilcandidato,
+    );
+   
+    if ($request->hasFile('foto')) $foto->move(public_path('image'), $fotocandidato);
+    if ($request->hasFile('perfil')) $perfil->move(public_path('pdf'), $perfilcandidato);
+   
+    $candidato = Candidato::create($campos);
+    $resp = $this->sendResponse($candidato,
+    "Guardado...");
+    return($resp);
 
 
  }
