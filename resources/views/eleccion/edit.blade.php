@@ -29,27 +29,46 @@
 
             <div class="form-group">
                 @csrf
-                <label for="descripcion">CASILLA:</label>
+                <label for="descripcion">PERIODO:</label>
                 <input type="text" value="{{$eleccion->periodo}}" class="form-control" name="periodo" />
             </div>
 
             <div class="form-group">
                 @csrf
-                <label for="descripcion">CANDIDATOS:</label>
+                <label for="descripcion">FECHA:</label>
                 <input type="date" value="{{$eleccion->fecha->format('Y-m-d')}}" class="form-control" name="fecha" />
             </div>
 
             <div class="form-group">
                 @csrf
-                <label for="descripcion">VOTOS:</label>
+                <label for="descripcion">FECHA APERTURA:</label>
                 <input type="date" value="{{$eleccion->fechaapertura->format('Y-m-d')}}" class="form-control" name="fechaapertura" />
             </div>
 
             <div class="form-group">
                 @csrf
-                <label for="descripcion">EVIDENCIA:</label>
+                <label for="descripcion">HORA APERTURA:</label>
                 <input type="time" value="{{$eleccion->horaapertura->format('H:i')}}" class="form-control" name="horaapertura" />
             </div>
+
+            <div class="form-group">
+                @csrf
+                <label for="descripcion">FECHA DE CIERRE:</label>
+                <input type="date" value="{{$eleccion->fechacierre->format('Y-m-d')}}" class="form-control" name="fechacierre" />
+            </div>
+
+            <div class="form-group">
+                @csrf
+                <label for="descripcion">HORA CIERRE:</label>
+                <input type="time" value="{{$eleccion->horacierre->format('H:i')}}" class="form-control" name="horacierre" />
+            </div>
+
+            <div class="form-group">
+                @csrf
+                <label for="descripcion">OBSERVACIONES:</label>
+                <input type="text" value="{{$eleccion->observaciones}}" class="form-control" name="observaciones" />
+            </div>
+
 
 
             <button type="submit" class="btn btn-primary">Guardar cambios</button>

@@ -34,19 +34,61 @@
                     <option value="M">Mujer</option>
                 </select>
             </div>
-            <div class="form-group">
+
+
+            <div class="form-group"> 
                 <label for="foto">Foto:</label>
-                <input type="file" id="foto" accept="image/png, image/jpeg" 
-                 class="form-control" name="foto" />
+                <input type="file" id="foto" accept="image/png, image/jpeg"  
+                 class="form-control" name="foto" onchange="vista_preliminar(event)"  />
             </div>
-            <div class="form-group">
+            <div ><img src="" alt="" id="img"></div>
+
+            
+            <div class="form-group"> 
                 <label for="perfil">Perfil:</label>
                 <input type="file" id="perfil" accept="application/pdf"
-                 class="form-control" name="perfil" />
+                 class="form-control" name="perfil" onchange="vista_previa(event)" />
             </div>
+            <div > <embed src="" type="" id="pdf" width="250" height="250" > </div>
 
             <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
+       
     </div>
 </div>
+
+<script>
+let vista_preliminar = (event)=>{
+
+    let leer_img = new FileReader();
+    let id_img = document.getElementById('img'); 
+
+    leer_img.onload = ()=>{
+        if(leer_img.readyState == 2 ){
+            id_img.src = leer_img.result
+
+        }
+    }
+
+    leer_img.readAsDataURL(event.target.files[0])
+}
+</script>
+
+<script>
+let vista_previa = (event)=>{
+
+    let leer_file = new FileReader();
+    let id_file = document.getElementById('pdf'); 
+
+    leer_file.onload = ()=>{
+        if(leer_file.readyState == 2 ){
+            id_file.src = leer_file.result
+
+        }
+    }
+
+    leer_file.readAsDataURL(event.target.files[0])
+}
+</script>
+
 @endsection
