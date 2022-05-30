@@ -34,14 +34,17 @@ Route::resource('voto', VotoController::class);
 Route::get('preview', 'App\Http\Controllers\PDFController@preview');
 Route::get('download', 'App\Http\Controllers\PDFController@download')->name('download');
 
-
+/*
 Route::get('/login','App\Http\Controllers\Auth\LoginController@index')->name('login');
 Route::get('/login/facebook', 'App\Http\Controllers\Auth\LoginController@redirectToFacebookProvider');
-Route::get('/login/facebook/callback', 'App\Http\Controllers\Auth\LoginController@handleProviderFacebookCallback');
+Route::get('/login/facebook/callback', 'App\Http\Controllers\Auth\LoginController@handleProviderFacebookCallback');*/
+
+Route::get('/logout', [LoginController::class,'logout']);
+Route::get('/login', [LoginController::class,'index']);
+Route::get('/login/facebook/', [LoginController::class,"redirectToFacebookProvider"]);
+Route::get('/login/facebook/callback', [LoginController::class,"handleProviderFacebookCallback"]);
 
 
-
-
-Route::middleware(['auth'])->group(function(){
-Route::resource('candidato', VotoController::class); 
-});
+//Route::middleware(['auth'])->group(function(){
+//Route::resource('candidato', VotoController::class); 
+//});

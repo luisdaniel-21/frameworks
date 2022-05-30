@@ -35,7 +35,7 @@
 					<ul>
 						<li><a href="{{ asset('casilla') }}">Listar</a></li>
 						<li><a href="{{ asset('casilla/create') }}">Agregar</a></li>
-                        <li><a href="{{ asset('casilla/pdf') }}">Generar PDF</a></li>
+                        <li><a target="_blank" href="{{ asset('casilla/pdf') }}">Generar PDF</a></li>
 					</ul>
 				</li>
 
@@ -52,6 +52,8 @@
 						<li><a href="{{ asset('voto/create') }}">Agregar</a></li>
 					</ul>
 				</li>
+
+                <li><a href="{{ asset('logout') }}">Cerrar Sesion</a></li>
 				
 			</ul>
 	</div>
@@ -60,7 +62,7 @@
 
         <div class="row">
             <div class="col-md-2">
-            <img src="https://media.glassdoor.com/sqll/2494896/instituto-tecnológico-nacional-de-méxico-squarelogo-1554785525101.png" width="200px">
+           
               
             </div>
             <div class="col-md-8 text-center">
